@@ -1,0 +1,122 @@
+
+Global Variables
+------------------
+// GAME SETTINGS
+var maxAttackPoints = 200 //global static
+var userCharacter = ""; //set when user clicks on character
+
+Character Object Variables
+-----------------
+
+
+    name: "",
+    baseAttackPower: 0,
+    attackPower: 0,
+    healthPoints: 5,
+    counterAttackPower: 0, // is this different?
+    userCharacter: false,
+    attacker: false, //maybe I dont need this
+    defender: false,
+
+
+var character = {
+      name: "",
+      baseAttackPower:0; ,
+      AttackPower= 0;
+      healthPoints: 5,
+      Counter Attack Power = 0; // is this different?
+      userCharacter = false,
+      attacker = false,      //maybe I dont need this
+      defender = false,
+      position = [0,0]; //record the position on screen of character
+
+      //object constructer https://www.w3schools.com/js/js_object_definition.asp
+      function character(name, baseAttackPower, counterAttackPower, healthPoints) {
+		    this.name = name;
+		    this.baseAttackPower = baseAttackPower;
+		    this.attackPower = baseAttackPower;
+		    this.counterAttackPower = counterAttackPower;
+		    this.healthPoints = healthPoints;
+		}
+
+      setBaseAttackPower: function() {
+      	randomPoints = Math.floor(Math.random()) * maxAttackPoints + 1; 
+      	this.baseAttackPower = randomPoints;
+      	this.attackPower = randomPoints;
+
+      };
+
+      setBaseAttackPoints : function(attackPoints) {
+      	baseAttackPoints = attackPoints;
+      }
+
+      removeHealthPoints: function (attackerPoints) {
+       	this.healthPoints - attackerPoints;
+      };
+
+      setUserCharacter: function () {
+      	 userCharacter = true;
+      };
+
+      increaseAttackPower() {
+      	this.attackPower = this.attackPower + 
+      }
+
+      console.log(this); // this would print parent object only
+};
+
+var characterNames = [name1, name2, name3]; //eventually add 2d array with character images
+var characterObjects = [];
+
+var attacker; //set to the current attacking character
+var defender; //set to the current defending character
+
+function attack (attacker, defender) {
+	defender.removeHealthPoints(attacker.attackPoints);
+	attacker.increaseAttackPower()
+};
+
+function resetGame() {
+	//createCharacterObjects();
+	//moveCharacter()
+	//setAttackPoints(); 
+	//resetHealthPoints();
+	//setDefaultPosition();
+};
+
+function createCharacterObjects() 
+	push to array
+	//for each name in characternames
+	characters[i] = new character("John", "Doe", 50, "blue");
+}
+
+function setDefaultPosition() {
+	//for each object position on page in order
+}
+
+resetHealthPoints() {
+	//for each object
+	//characters[i].healthPoints = 0;
+}
+
+function resetRound () {
+	moveCharactersBack(attacker, defender);
+};
+
+function moveCharactersBack(attacker, defender) {
+	//code to check current position and move back to default position
+}
+
+setBaseAttackPower() {
+	//for each character 
+	//set random baseAttackPower 
+	var randomAttackPower = Math.random()
+	characters[i].setBaseAttackPower();
+}
+
+
+
+array of characters?
+
+
+
