@@ -1,5 +1,5 @@
 /***********************
- * Styles below from Bootstrap Jumbotron Narrow
+ * Some of the Top Styles below from Bootstrap Jumbotron Narrow
  ************************/
 
 
@@ -23,26 +23,9 @@ body {
 }
 
 
-/* Custom page header */
-
-.header {
-    padding-left: 1rem;
-
-    background-image: url("../images/bg.png");
-        -webkit-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-    padding-top: 1em;
-    padding-bottom: 0.5em;
-}
-
-
 /* Make the masthead heading the same height as the navigation */
 
-.header h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 3rem;
-}
+
 
 
 /* Custom page footer */
@@ -63,34 +46,6 @@ body {
     }
 }
 
-.container-narrow>hr {
-    margin: 2rem 0;
-}
-
-
-/* Main marketing message and sign up button */
-
-.jumbotron {
-    text-align: center;
-    border-bottom: .05rem solid #e5e5e5;
-}
-
-.jumbotron .btn {
-    padding: .75rem 1.5rem;
-    font-size: 1.5rem;
-}
-
-
-/* Supporting marketing content */
-
-.marketing {
-    margin: 3rem 0;
-    color: white;
-}
-
-.marketing p+h4 {
-    margin-top: 1.5rem;
-}
 
 
 /* Responsive: Portrait tablets and up */
@@ -107,17 +62,13 @@ body {
     .header {
         margin-bottom: 2rem;
     }
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
 }
 
 
 
-/*
- * Customized CSS by Will
- */
+/***********************
+ * New styles CSS by Will
+ ***********************/
 
 .character-buttons-container {
     width: 500px;
@@ -157,9 +108,9 @@ border-bottom: 1px black dotted;
 
 
 .map-container {
-    margin: 20px; auto;
+    margin-top: 20px;
     position: relative;
-    min-width: 800px;
+    min-width: 500px;
     padding-top: 10px;
     padding-left: 20px;
     padding-bottom: 10px;
@@ -237,6 +188,7 @@ border-bottom: 1px black dotted;
   font-weight: bold;
   text-decoration: underline;
   font-family: 'Homemade Apple', cursive;
+ height: 100px;
 
 }
 
