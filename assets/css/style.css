@@ -1,188 +1,243 @@
 /***********************
- * Styles below from Bootstrap Cover Template
+ * Styles below from Bootstrap Jumbotron Narrow
  ************************/
 
 
-/*
- * Globals
- */
+/* Space out content a bit */
 
-
-/* Links */
-
-a,
-a:focus,
-a:hover {
-    color: #fff;
-}
-
-
-/* Custom default button */
-
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:focus {
-    color: #333;
-    text-shadow: none;
-    /* Prevent inheritance from `body` */
-    background-color: #fff;
-    border: .05rem solid #fff;
-}
-
-
-
-/*
- * Base structure
- */
-
-html,
 body {
-    height: 100%;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-image: url("../images/wood.png");
+    
+}
 
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+
+.header,
+.marketing,
+.footer {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+
+/* Custom page header */
+
+.header {
+    padding-left: 1rem;
+
+    background-image: url("../images/bg.png");
+        -webkit-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+}
+
+
+/* Make the masthead heading the same height as the navigation */
+
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 3rem;
+}
+
+
+/* Custom page footer */
+
+.footer {
+    padding-top: 1.5rem;
+    color: #777;
+}
+
+
+/* Customize container */
+
+@media (min-width: 48em) {
+    .container {
+        max-width: 60rem;
+        height: 100%;
+        min-height: 100%;
+    }
+}
+
+.container-narrow>hr {
+    margin: 2rem 0;
+}
+
+
+/* Main marketing message and sign up button */
+
+.jumbotron {
+    text-align: center;
+    border-bottom: .05rem solid #e5e5e5;
+}
+
+.jumbotron .btn {
+    padding: .75rem 1.5rem;
+    font-size: 1.5rem;
+}
+
+
+/* Supporting marketing content */
+
+.marketing {
+    margin: 3rem 0;
+    color: white;
+}
+
+.marketing p+h4 {
+    margin-top: 1.5rem;
+}
+
+
+/* Responsive: Portrait tablets and up */
+
+@media screen and (min-width: 48em) {
+    /* Remove the padding we set earlier */
+    .header,
+    .marketing,
+    .footer {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 2rem;
+    }
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
+}
+
+
+
+/*
+ * Customized CSS by Will
+ */
+
+.character-buttons-container {
+    width: 500px;
+    position: relative;
+}
+
+.character-button {
+    background: url("../images/ship.png");
+    height: 3.5em;
+    width: 3.5em;
+    background-size: 3.5em 3.5em;
+    padding-top: 20px;
+    margin-left: 100px;
+    font-size: 25px;
+    float: left;
+}
+
+.character-button:hover {
+border-bottom: 1px black dotted;
+}
+
+.character-selected {
+    border-bottom: 1px black dotted;
+    position: absolute;
+    top: 150px;
+    left: 350px;
+}
+
+.enemy-selected {
+    border-bottom: 1px dotted blue;
+    position: absolute;
+    height: 3.5em;
+    width: 3.5em;
+    top: 150px;
+    left: 200px;
+}
+
+
+.map-container {
+    margin: 20px; auto;
+    position: relative;
+    min-width: 800px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    -webkit-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
     background-image: url("../images/bg.png");
 }
 
-body {
-    color: #fff;
-    text-align: center;
-    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+.bigger {
+      height: 500px;
+      box-shadow: inset 0 0 5rem rgba(0, 0, 0, 1);
 }
 
-
-/* Extra markup and styles for table-esque vertical and horizontal centering */
-
-.site-wrapper {
-    display: table;
-    width: 100%;
-    height: 100%;
-    /* For at least Firefox */
-    min-height: 100%;
-    -webkit-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+.btn-map {
+  position: absolute;
+    border: black solid 1px;
+    padding: 20px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    top: 150px;
+    left: 300px;
+    font-size: 3em;
 }
 
-.site-wrapper-inner {
-    display: table-cell;
-    vertical-align: top;
+.btn-map-attack {
+  position: absolute;
+    border: black solid 1px;
+    padding: 10px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    top: 300px;
+    left: 300px;
 }
 
-.cover-container {
-    margin-right: auto;
-    margin-left: auto;
+.score-container {
+    position: absolute;
+    top: 10;
+    right: 0;
+    border: black solid 2px;
+    padding: 15px;
+    margin: 20px;
+    background: rgba(0, 0, 0, 0.4);
 }
 
-
-/* Padding for spacing */
-
-.inner {
-    padding: 2rem;
+.score-user {
+  font-weight: bold;
 }
 
-
-
-/*
- * Header
- */
-
-.masthead {
-    margin-bottom: 2rem;
+.messages-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+    border: black solid 2px;
+    padding: 15px;
+    margin: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    min-width: 250px;
+    min-height: 50px;
+  
 }
 
-.masthead-brand {
-    margin-bottom: 0;
+.character-icons {
+    border: blue solid 1px;
 }
 
-.nav-masthead .nav-link {
-    padding: .25rem 0;
-    font-weight: bold;
-    color: rgba(255, 255, 255, .5);
-    background-color: transparent;
-    border-bottom: .25rem solid transparent;
+.header-wrapper {
+    margin: 0 auto;
 }
 
-.nav-masthead .nav-link:hover,
-.nav-masthead .nav-link:focus {
-    border-bottom-color: rgba(255, 255, 255, .25);
+.game-title {
+    font-family: 'Homemade Apple', cursive;
 }
 
-.nav-masthead .nav-link+.nav-link {
-    margin-left: 1rem;
-}
+.score-title {
+  font-weight: bold;
+  text-decoration: underline;
+  font-family: 'Homemade Apple', cursive;
 
-.nav-masthead .active {
-    color: #fff;
-    border-bottom-color: #fff;
-}
-
-@media (min-width: 48em) {
-    .masthead-brand {
-        float: left;
-    }
-    .nav-masthead {
-        float: right;
-    }
-}
-
-
-
-/*
- * Cover
- */
-
-.cover {
-    padding: 0 1.5rem;
-}
-
-.cover .btn-lg {
-    padding: .75rem 1.25rem;
-    font-weight: bold;
-}
-
-
-
-/*
- * Footer
- */
-
-.mastfoot {
-    color: rgba(255, 255, 255, .5);
-}
-
-
-
-/*
- * Affix and center
- */
-
-@media (min-width: 40em) {
-    /* Pull out the header and footer */
-    .masthead {
-        position: fixed;
-        top: 0;
-    }
-    .mastfoot {
-        position: fixed;
-        bottom: 0;
-    }
-    /* Start the vertical centering */
-    .site-wrapper-inner {
-        vertical-align: middle;
-    }
-    /* Handle the widths */
-    .masthead,
-    .mastfoot,
-    .cover-container {
-        width: 100%;
-        /* Must be percentage or pixels for horizontal alignment */
-    }
-}
-
-@media (min-width: 62em) {
-    .masthead,
-    .mastfoot,
-    .cover-container {
-        width: 42rem;
-    }
 }
 
 
@@ -190,22 +245,19 @@ body {
  * Character Colors
  */
 
-.one {
-    background-color: red;
+
+.facebook {
+    color: navy;
 }
 
-.two {
-    background-color: yellow;
+.twitter {
+    color: lightblue;
 }
 
-.three {
-    background-color: blue;
+.google {
+    color: green;
 }
 
-.four {
-    background-color: green;
-}
-
-.five {
-    background-color: black;
+.apple {
+    color: white;
 }

@@ -1,6 +1,9 @@
 // TO DO
-// Add ability for user to add themselve as a character e.g. Will Doesn't Bear
-// 
+// Change health points to number of pirate crew
+// You have xx crew remaining
+// you now attacked with yy firepower
+// add icons to each character
+// add scorecard
 
 
 // -----------------------------
@@ -12,30 +15,32 @@
 // GLOBAL VARIABLES
 // -----------------------------
 
-var characterNames = ["One", "Two", "Three", "Four"];
+var characterNames = ["Facebook", "Twitter", "Google", "Apple"]; //this makes it easy to add, remove or change characters in the future
+
 //array for setting a unique class for each character to be able to provide unique css style
-var characterColors = ["one","two","three","four","five"];
-var characters = [];
+var characaterStyle = ["facebook", "twitter", "google", "apple"]; //this was going to be implemented so a user could select a color -> NOT COMPLETE
+//array for setting font-awesome icons, I was originally going to use icons that were not the same as the character name but this is not necessary now
+var icons = ["facebook", "twitter", "google", "apple"] //also not required anymore as icon names are same as character name
+var characters = []; //used to store character objects
 var userCharacter = ""; //index to user character object in array 
 var enemyCharacter; //index to eney character object in array 
-var enemiesKilled = 0;
+var enemiesKilled = 0; //used to check if all enemies killed
 
 
 // Game Settings
 // -----------------------------
-var maxAttackPoints = 200; //global static
-var defaultHealth = 100;
-
-var maxBaseAttackPower = 100;
-var maxCounterAttackPower = 100;
+var maxAttackPoints = 50; //global static
+var minHealthPoints = 100; //global static
+var extraHealthPointsMax = 100; //global static
+var maxBaseAttackPower = 50; //global static
+var maxCounterAttackPower = 75; //global static
 
 // Game State Flags
 // -----------------------------
 var isNewGame = true;
 var isNewRound = true;
 var characterChosen = false;
-
-
+var enemySelected = false;
 
 // Character Object
 // -----------------------------
@@ -57,13 +62,13 @@ function Character(name, baseAttackPower, counterAttackPower, healthPoints) {
 // -----------------------------
 
 
-//Helper function to find the index of the character in the array
+//Helper function to find the index of the character in the array, given the character name
 function findCharacterByName(currentName) {
     for (var i = 0; i < characters.length; i++) {
         //check the name property of each character against the currentName parameter
         if (characters[i].name == currentName) {
             // return the index of the object
-            console.log("findCharacterByName(): index is :" + i)
+            //console.log("findCharacterByName(): index is :" + i)
             return i;
         }
     };
@@ -71,8 +76,7 @@ function findCharacterByName(currentName) {
     console.log("********* findCharacterByName(): No index found for: " + currentName)
 }
 
-//Helper function to get the character object from array
-//Returns a character object
+//Helper function to set the character object as user in the characters array
 function setUserCharacterByName(currentName) {
     for (var i = 0; i < characters.length; i++) {
         //check the name property of each character against the currentName parameter
@@ -87,11 +91,10 @@ function setUserCharacterByName(currentName) {
     console.log("setUserCharacterByName(): No character index found for: " + currentName);
 }
 
-//change the class off the user character button to indicate the selected character
+//Change the  class off the user character button to indicate the selected character
 function displayUserCharacter(userPick) {
-    //look up the current character button
-    //remove the default class and change to selected character class
-    $("#character-buttons").find("[data-character-name='" + userPick + "']").removeClass("btn-secondary").addClass("btn-primary");
+    //Add a class to the character element that the user selected
+    $("#character-buttons").find("[data-character-name='" + userPick + "']").addClass("character-selected");
 }
 
 function removeEnemyCharacter() {
@@ -109,28 +112,30 @@ function createCharacterObjects() {
     for (var i = 0; i < characterNames.length; i++) {
         var baseAttackPowerRandom = Math.floor(Math.random() * maxBaseAttackPower + 1);
         var counterAttackPowerRandom = Math.floor(Math.random() * maxCounterAttackPower + 1);
-        console.log("New Character: " + characterNames[i] + " base: " + baseAttackPowerRandom + ", counter: " + counterAttackPowerRandom + ", health: " + defaultHealth);
-        characters[i] = new Character(characterNames[i], baseAttackPowerRandom, counterAttackPowerRandom, defaultHealth);
+        var healthPointsRandom = Math.floor(Math.random() * extraHealthPointsMax + 1) + minHealthPoints; 
+        console.log("New Character: " + characterNames[i] + " base: " + baseAttackPowerRandom + ", counter: " + counterAttackPowerRandom + ", health: " + healthPointsRandom);
+        characters[i] = new Character(characterNames[i], baseAttackPowerRandom, counterAttackPowerRandom, healthPointsRandom);
         //console.log("Character: " + characters[i].name);
     };
 };
 
-//Dynamically Create Buttons for each character
+//Dynamically Create Buttons and score fields for each character
 function createCharacterButtons() {
 
     for (var i = 0; i < characters.length; i++) {
-        var characterBtn = $("<button>");
+        var characterBtn = $("<div>");
         //give each character-button a class and bootstrap button classs
-        characterBtn.addClass("character-button btn btn-secondary " + characterColors[i]);
+        characterBtn.addClass("character-button " + characaterStyle[i]);
         //give each button data equal to the character name
-        console.log("Creating Character Button for: " + characters[i].name);
-        characterBtn.attr("data-character-name",  characters[i].name);
-
-        //add text to the button
-        characterBtn.text(characters[i].name);
-
+        //console.log("Creating Character Button for: " + characters[i].name);
+        characterBtn.attr("data-character-name", characters[i].name);
+        //add icon to the button
+        characterBtn.html("<i class='fa fa-" + icons[i] + "'></i> ");
         //add the buttons under the #character-buttons div
         $("#character-buttons").append(characterBtn);
+
+        //add the character health text in the scorecard area
+        $("#character-scores").append("<div class='score'><div><i class='fa fa-map-pin'></i> " + characters[i].name + ": " + characters[i].healthPoints + "</div>");
     }
 
 };
@@ -149,7 +154,7 @@ function characterIsUser(currentName) {
 function attackEnemy() {
 
     //create visual attack element
-    $("#attack-area").text("You attacked " + characters[enemyCharacter].name + " for " + characters[userCharacter].attackPower);
+    $("#message-area").text("You fired " + characters[userCharacter].attackPower + " employees of " + characters[enemyCharacter].name);
     console.log("-->Enemy health was: " + characters[enemyCharacter].healthPoints);
     characters[enemyCharacter].healthPoints -= characters[userCharacter].attackPower;
     characters[userCharacter].attackPower += characters[userCharacter].baseAttackPower;
@@ -164,7 +169,7 @@ function attackEnemy() {
         //remove dead enemy
         removeEnemyCharacter();
         //create visual attack element
-        $("#dead-message").text(characters[enemyCharacter].name + " Dead, you can choose to attack another character");
+        $("#message-area3").text(characters[enemyCharacter].name + " has no more employees, you can choose to attack another company");
 
         console.log("Enemies Killed: " + enemiesKilled);
         console.log("Total Enemies: " + (characters.length - 1));
@@ -174,14 +179,22 @@ function attackEnemy() {
             console.log("User has won the game");
             removeRemainingCharacters();
             clearMessages();
-            $("#attack-area").text("You have won the game");
+            $("#message-area").text("You have won the game");
             //removeUserCharacter();
             $("#reset-button").show();
             //remove event listener from character ??
 
         }
     }
+    //enemy still alive
+    else {
+        console.log("enemy still alive");
 
+        //ANIMATE
+        $(".enemy-selected").removeClass("enemy-selected");
+
+    }
+    updateHealthDisplay();
 
 
 };
@@ -192,22 +205,47 @@ function removeRemainingCharacters() {
 
 }
 
+function updateHealthDisplay() {
+    $("#character-scores").empty();
+    for (var i = 0; i < characters.length; i++) {
+        // display health for all alive enemies
+        if (characters[i].isAlive) {
+
+            if (i == userCharacter) {
+                //add the character health text in the scorecard area
+                $("#character-scores").append("<div class='score'><div><i class='fa fa-map-pin'></i> " + characters[i].name + ": " + characters[i].healthPoints + "</div>");
+            }
+            else {
+                $("#character-scores").append("<div class='score'><div><i class='fa fa-map-pin'></i> " + characters[i].name + ": " + characters[i].healthPoints + "</div>");
+
+            }
+        } else {
+            $("#character-scores").append("<div class='score'><div><i class='fa fa-map-pin'></i> " + characters[i].name + ": <i class='fa fa-times' aria-hidden='true'></i></div>");
+        }
+    }
+
+}
+
+
 
 function counterAttackUser() {
 
     //create visual attack element
-    $("#attack-area2").text("You got attacked back for " + characters[enemyCharacter].counterAttackPower);
+    $("#message-area2").text("They fired " + characters[enemyCharacter].counterAttackPower + " of your employees");
     console.log("->Character health was: " + characters[userCharacter].healthPoints);
     characters[userCharacter].healthPoints -= characters[enemyCharacter].counterAttackPower;
     console.log("->Character health now: " + characters[userCharacter].healthPoints);
 
+    updateHealthDisplay();
+
     //check if user dead -> GAME OVER
     if (characters[userCharacter].healthPoints <= 0) {
         console.log("->user DEAD");
-        $("#dead-message").text("you are dead. game over")
+        $("#message-area3").text("Your Company is Dead. Better luck next time...");
+         $("#character-scores").empty();
         removeRemainingCharacters();
 
-        //display dead user
+        //ANIMATE dead user
         //END GAME - Game Over
         $("#reset-button").show(); //show the reset button if it is showing
     }
@@ -216,9 +254,9 @@ function counterAttackUser() {
 //hide the user messages from last move
 function clearMessages() {
     console.log("clearMessages()");
-    $("#attack-area").text("");
-    $("#attack-area2").text("");
-    $("#dead-message").text("");
+    $("#message-area").text("");
+    $("#message-area2").text("");
+    $("#message-area3").text("");
     // $("#reset-button").hide(); //hide the reset button if it is showing
 }
 
@@ -251,7 +289,6 @@ $(document).ready(function() {
             console.log("---------NEW GAME--------");
             isNewGame = false;
 
-
             //if user has not picked a character
             if (!characterChosen) {
                 //get the character name from the button data-character-name attribute.
@@ -261,6 +298,7 @@ $(document).ready(function() {
                 //console.log("Found Object: '" + userCharacter.name);
                 setUserCharacterByName(userPick);
                 displayUserCharacter(userPick);
+                $("#message-area").text("Choose an enemy ship to fight");
                 console.log("->End Click Early<-");
                 return; //exit out
             }
@@ -270,7 +308,7 @@ $(document).ready(function() {
         else {
 
             //this is a new round of the game
-            if (isNewRound) {
+            if (isNewRound && !enemySelected) {
                 console.log("----NEW Round---");
                 isNewRound = false;
                 //hide the attack button
@@ -286,13 +324,16 @@ $(document).ready(function() {
 
                 console.log("-->Character is user, can't fight themself");
                 //display message for user to pick an enemy
-                $("#attack-area").text("You can't fight yourself, pick an enemy");
+                $("#message-area").text("You can't fight yourself, pick an enemy");
 
                 //user picked an enemy
-            } else {
+            } else if (!enemySelected) {
+                enemySelected = true;
                 console.log("-->Enemy selected: " + userPick);
                 //set the current enemy character
                 enemyCharacter = findCharacterByName(userPick);
+                //Move Enemy
+                $("#character-buttons").find("[data-character-name='" + userPick + "']").removeClass("btn-secondary").addClass("enemy-selected");
 
                 //TO DO
                 //move the enemy into position
@@ -302,6 +343,7 @@ $(document).ready(function() {
                 //show the attack button
                 $('#attack-button').show();
             }
+
 
         }
         console.log("->End Click<-");
@@ -327,6 +369,7 @@ $(document).ready(function() {
         else {
             //dead enemy already handled in counterAttackUser()
         }
+        enemySelected = false;
 
 
 
@@ -338,16 +381,6 @@ $(document).ready(function() {
     //listener for click on reset button
     $("#reset-button").on("click", function() {
         location.reload();
-        // console.log("---> reset-button clicked");
-        // clearMessages();
-        // isNewGame = true;
-        // characterChosen = false;
-        // //Create Buttons again for each character
-        // createCharacterButtons();
-        //     //create a character object for each charcter name
-        // createCharacterObjects();
-
-        // $('#reset-button').hide();
     }); //END reset-button listener
 
 });
